@@ -1,5 +1,8 @@
 package com.projet.frigo;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 public class ProduitNotFoundException extends RuntimeException {
 
     public ProduitNotFoundException(Long id) {

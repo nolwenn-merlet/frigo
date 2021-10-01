@@ -1,8 +1,8 @@
 package com.projet.frigo;
 
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
 
 @RestController
 public class ProduitController {
@@ -26,7 +26,7 @@ public class ProduitController {
     }
 
 
-    @GetMapping("/produits/id")
+    @GetMapping("/produits/{id}")
     Produit trouverUnProduit(@PathVariable Long id) {
 
         return produitRepository.findById(id)
@@ -39,7 +39,7 @@ public class ProduitController {
 
         return produitRepository.findById(id)
                 .map(monProduit -> {
-                    monProduit.setNomProduit(nouveauProduit.getNomProduit());
+                    monProduit.setNom(nouveauProduit.getNom());
                     return produitRepository.save(monProduit);
                 })
                 .orElseGet(() -> {
@@ -49,9 +49,14 @@ public class ProduitController {
     }
 
 
-    @DeleteMapping("/produits")
+    @DeleteMapping("/produits/{id}")
     void effacerProduit(@PathVariable Long id) {
+
+        produitRepository.findById(id)
+                .orElseThrow(() -> new ProduitNotFoundException(id));
+
         produitRepository.deleteById(id);
+
     }
 }
 

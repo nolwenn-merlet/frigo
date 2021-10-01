@@ -3,6 +3,7 @@ package com.projet.frigo;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity //JPA annotation to make this object ready for storage in a JPA-based data store
 class Produit {
@@ -11,13 +12,13 @@ class Produit {
     @GeneratedValue
     private long id;
 
-    private String nomProduit;
+    private String nom;
 
     // A custom constructor is created when we need to create a new instance, but don’t yet have an id
     public Produit() {}
 
-    public Produit(String nomProduit) {
-        this.nomProduit = nomProduit;
+    public Produit(String nom) {
+        this.nom = nom;
     }
 
     public long getId() {
@@ -28,12 +29,17 @@ class Produit {
         this.id = id;
     }
 
-    public String getNomProduit() {
-        return nomProduit;
+    public String getNom() {
+        return nom;
     }
 
-    public void setNomProduit(String nomProduit) {
-        this.nomProduit = nomProduit;
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    @Override
+    public String toString() {
+        return "Produit {" + "id=" + this.id + ", nom='" + this.nom + "'}";
     }
 
 }
