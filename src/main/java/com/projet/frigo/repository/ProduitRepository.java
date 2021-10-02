@@ -1,8 +1,11 @@
-package com.projet.frigo;
+package com.projet.frigo.repository;
 
+import com.projet.frigo.model.Produit;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProduitRepository extends JpaRepository<Produit, Long> {
+
+    Produit findByNom(String nom);
 
     /**
     By simply declaring the following ProduitRepository interface we AUTOMATICALLY will be able to

@@ -1,5 +1,7 @@
 package com.projet.frigo;
 
+import com.projet.frigo.model.Produit;
+import com.projet.frigo.repository.ProduitRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -15,8 +17,8 @@ public class ChargerBD {
     @Bean
     CommandLineRunner initialiserBD (ProduitRepository produitRepository) {
         return args ->{
-            log.info("Chargement " + produitRepository.save(new Produit("tomates")));
-            log.info("Chargement " + produitRepository.save(new Produit("aubergines")));
+            log.info("Chargement " + produitRepository.save(new Produit("tomate", 5)));
+            log.info("Chargement " + produitRepository.save(new Produit("aubergine", 2)));
         };
     }
 

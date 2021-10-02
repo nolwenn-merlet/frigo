@@ -1,45 +1,47 @@
-package com.projet.frigo;
+package com.projet.frigo.controller;
 
+import com.projet.frigo.model.Produit;
+import com.projet.frigo.repository.ProduitRepository;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
 @RestController
-public class ProduitController {
+public class ProduitControllerImpl implements ProduitController {
 
     private final ProduitRepository produitRepository;
 
     // A ProduitRepository is injected by constructor into the controller.
-    public ProduitController(ProduitRepository produitRepository) {
+    public ProduitControllerImpl(ProduitRepository produitRepository) {
         this.produitRepository = produitRepository;
     }
 
     @PostMapping("/produits")
-    Produit enregistrerNouveauProduit(@RequestBody Produit nouveauProduit) {
+    public Produit enregistrerNouveauProduit(@RequestBody Produit nouveauProduit) {
         return produitRepository.save(nouveauProduit);
     }
 
 
     @GetMapping("/produits")
-    List<Produit> listerProduits() {
+    public List<Produit> listerProduits() {
         return produitRepository.findAll();
     }
 
 
     @GetMapping("/produits/{id}")
-    Produit trouverUnProduit(@PathVariable Long id) {
+    public Produit trouverUnProduit(@PathVariable Long id) {
 
         return produitRepository.findById(id)
                 .orElseThrow(() -> new ProduitNotFoundException(id));
     }
 
 
-    @PutMapping("/produits")
-    Produit changerUnProduit(@RequestBody Produit nouveauProduit, @PathVariable Long id) {
+    @PutMapping("/produits/{id}")
+    public Produit changerUnProduit(@RequestBody Produit nouveauProduit, @PathVariable Long id) {
 
         return produitRepository.findById(id)
                 .map(monProduit -> {
-                    monProduit.setNom(nouveauProduit.getNom());
+                    monProduit.setQuantite(nouveauProduit.getQuantite());
                     return produitRepository.save(monProduit);
                 })
                 .orElseGet(() -> {
@@ -50,7 +52,7 @@ public class ProduitController {
 
 
     @DeleteMapping("/produits/{id}")
-    void effacerProduit(@PathVariable Long id) {
+    public void effacerProduit(@PathVariable Long id) {
 
         produitRepository.findById(id)
                 .orElseThrow(() -> new ProduitNotFoundException(id));
